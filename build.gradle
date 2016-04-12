@@ -1,11 +1,11 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
 
-sourceCompatibility = 1.5
-version = '1.0'
+sourceCompatibility = 1.8
+version = '0.1'
 jar {
     manifest {
-        attributes 'Implementation-Title': 'Gradle Quickstart',
+        attributes 'Implementation-Title': 'raft4j',
                    'Implementation-Version': version
     }
 }
@@ -15,8 +15,9 @@ repositories {
 }
 
 dependencies {
-    compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
-    testCompile group: 'junit', name: 'junit', version: '4.+'
+    compile 'io.netty:netty-all:5.+',
+			'commons-lang:commons-lang:2.6'
+    testCompile 'junit:junit:4.+'
 }
 
 test {
