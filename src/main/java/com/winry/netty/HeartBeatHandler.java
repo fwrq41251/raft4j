@@ -1,4 +1,4 @@
-package com.winry.heartbeat;
+package com.winry.netty;
 
 import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -16,6 +16,11 @@ public class HeartBeatHandler extends ChannelDuplexHandler {
 				ctx.writeAndFlush("this is a heartBeat");
 			}
 		}
+	}
+
+	@Override
+	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+		ctx.writeAndFlush(msg);
 	}
 
 }
