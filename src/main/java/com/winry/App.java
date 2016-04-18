@@ -1,5 +1,7 @@
 package com.winry;
 
+import com.winry.heartbeat.MyChannelInitializer;
+
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelOption;
@@ -21,7 +23,7 @@ public class App {
 		try {
 			ServerBootstrap b = new ServerBootstrap();
 			b.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class).option(ChannelOption.SO_BACKLOG, 100)
-					.handler(new LoggingHandler(LogLevel.INFO)).childHandler(null);
+					.handler(new LoggingHandler(LogLevel.INFO)).childHandler(new MyChannelInitializer());
 
 			// Start the server.
 			ChannelFuture f = b.bind(PORT).sync();
