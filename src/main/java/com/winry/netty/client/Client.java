@@ -1,5 +1,7 @@
 package com.winry.netty.client;
 
+import java.text.MessageFormat;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,7 +36,7 @@ public class Client {
 			b.group(new NioEventLoopGroup());
 			b.channel(NioSocketChannel.class);
 			b.option(ChannelOption.SO_KEEPALIVE, true);
-			b.handler(new ClientInitializer());
+			b.handler(new ClientInitializer(this));
 
 			// Start the client.
 			ChannelFuture f = b.connect(host, port).sync();
@@ -51,6 +53,10 @@ public class Client {
 
 	public int getPort() {
 		return port;
+	}
+
+	public String getDomain() {
+		return MessageFormat.format("{0}:{1}", host, String.valueOf(port));
 	}
 
 }

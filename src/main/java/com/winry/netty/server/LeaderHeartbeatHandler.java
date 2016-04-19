@@ -20,6 +20,11 @@ public class LeaderHeartbeatHandler extends SimpleChannelInboundHandler<LeaderHe
 
 	private long lastHearbeatTime;
 
+	/**
+	 * 
+	 * @param heartBeatInterval
+	 *            heartbeat interval second
+	 */
 	public LeaderHeartbeatHandler(int heartBeatInterval) {
 		super();
 		this.heartBeatIntervalNanos = heartBeatInterval * 1000;

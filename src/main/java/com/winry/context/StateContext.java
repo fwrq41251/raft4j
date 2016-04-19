@@ -4,23 +4,28 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class StateContext {
 
-	private static StateContext context = new StateContext(State.follower);
+	private static State state = State.follower;
 
-	private State state;
-
-	private AtomicInteger termId = new AtomicInteger(0);
+	private static AtomicInteger termId = new AtomicInteger(0);
 
 	enum State {
 		follower, candidate, leader;
 	}
 
-	public StateContext(State state) {
-		super();
-		this.state = state;
+	public static State getState() {
+		return state;
 	}
 
-	public static StateContext getStateContext() {
-		return context;
+	public static void setState(State state) {
+		StateContext.state = state;
+	}
+
+	public static AtomicInteger getTermId() {
+		return termId;
+	}
+
+	public static void increceTermId() {
+		termId.incrementAndGet();
 	}
 
 }

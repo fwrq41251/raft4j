@@ -12,6 +12,13 @@ import io.netty.handler.codec.protobuf.ProtobufEncoder;
 
 public class ClientInitializer extends ChannelInitializer<SocketChannel> {
 
+	private final Client client;
+
+	public ClientInitializer(Client client) {
+		super();
+		this.client = client;
+	}
+
 	@Override
 	protected void initChannel(SocketChannel ch) throws Exception {
 		ChannelPipeline pipeline = ch.pipeline();
@@ -25,7 +32,7 @@ public class ClientInitializer extends ChannelInitializer<SocketChannel> {
 		pipeline.addLast("protobufEncoder", new ProtobufEncoder());
 
 		// handler
-		pipeline.addLast("heartBeatHandler", new ClientHandler());
+		pipeline.addLast("heartBeatHandler", new ClientHandler(client));
 
 	}
 
