@@ -1,7 +1,6 @@
 package com.winry;
 
 import java.io.IOException;
-import java.text.MessageFormat;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -18,7 +17,7 @@ public class ReadPropTest {
 
 	@Test
 	public void format() {
-		final String domain = MessageFormat.format("{0}:{1}", "127.0.0.1", "8964");
+		final String domain = String.format("%s:%d", "127.0.0.1", 5986);
 		System.out.println(domain);
 	}
 

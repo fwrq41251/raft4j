@@ -1,7 +1,5 @@
 package com.winry.netty.client;
 
-import java.text.MessageFormat;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,7 +54,7 @@ public class Client {
 	}
 
 	public String getDomain() {
-		return MessageFormat.format("{0}:{1}", host, String.valueOf(port));
+		return String.format("%s:%d", host, port);
 	}
 
 }
