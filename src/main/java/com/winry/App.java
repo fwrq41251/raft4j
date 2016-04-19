@@ -30,7 +30,7 @@ public class App {
 		nodeMap.forEach((key, value) -> {
 			int port = Integer.valueOf(value);
 			Client client = new Client(key, port);
-			client.start(null);
+			client.start();
 		});
 	}
 

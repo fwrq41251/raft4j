@@ -1,10 +1,14 @@
 package com.winry.context;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class StateContext {
 
 	private static StateContext context = new StateContext(State.follower);
 
 	private State state;
+
+	private AtomicInteger termId = new AtomicInteger(0);
 
 	enum State {
 		follower, candidate, leader;
