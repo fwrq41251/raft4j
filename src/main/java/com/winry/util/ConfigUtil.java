@@ -26,4 +26,8 @@ public class ConfigUtil {
 		return prop.getProperty(key);
 	}
 
+	public static int getInt(String key) {
+		return Integer.valueOf(get(key));
+	}
+
 }

@@ -1,4 +1,4 @@
-package com.winry.netty;
+package com.winry.netty.server;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
