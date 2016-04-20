@@ -15,10 +15,4 @@ public class ReadPropTest {
 		Assert.assertEquals("127.0.0.1", value);
 	}
 
-	@Test
-	public void format() {
-		final String domain = String.format("%s:%d", "127.0.0.1", 5986);
-		System.out.println(domain);
-	}
-
 }

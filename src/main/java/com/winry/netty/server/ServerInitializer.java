@@ -24,6 +24,6 @@ public class ServerInitializer extends ChannelInitializer<Channel> {
 		pipeline.addLast("protobufEncoder", new ProtobufEncoder());
 
 		// handler
-		pipeline.addLast("heartBeatHandler", new LeaderHeartbeatHandler(3));
+		pipeline.addLast("heartBeatHandler", new LeaderHeartbeatHandler());
 	}
 }
