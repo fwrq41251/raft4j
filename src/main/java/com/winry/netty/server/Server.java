@@ -3,6 +3,8 @@ package com.winry.netty.server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.winry.context.StateContext;
+
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelOption;
@@ -27,17 +29,18 @@ public class Server {
 		EventLoopGroup workerGroup = new NioEventLoopGroup();
 		try {
 			ServerBootstrap b = new ServerBootstrap();
-			b.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class)
-					.childHandler(new ServerInitializer()).option(ChannelOption.SO_BACKLOG, 128) // (5)
+			b.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class).childHandler(new ServerInitializer())
+					.option(ChannelOption.SO_BACKLOG, 128) // (5)
 					.childOption(ChannelOption.SO_KEEPALIVE, true);
 
 			// Start the server.
 			ChannelFuture f = b.bind(port).sync();
+			f.addListener(futrue -> StateContext.startWaitElectionTask(workerGroup));
 			return f;
 		} catch (InterruptedException e) {
 			LOGGER.debug("client start interupted", e);
 			throw new RuntimeException(e);
-		} 
+		}
 	}
 
 }

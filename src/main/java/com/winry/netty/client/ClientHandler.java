@@ -3,15 +3,14 @@ package com.winry.netty.client;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.winry.context.ChannelContext;
-import com.winry.message.LeaderHeartbeatProto.LeaderHeartbeat;
+import com.winry.context.ClientsContext;
 
-import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.channel.ChannelInboundHandlerAdapter;
 
-public class ClientHandler extends SimpleChannelInboundHandler<LeaderHeartbeat> {
+public class ClientHandler extends ChannelInboundHandlerAdapter {
 
+	@SuppressWarnings("unused")
 	private static final Logger LOGGER = LoggerFactory.getLogger(ClientHandler.class);
 
 	private final Client client;
@@ -23,15 +22,9 @@ public class ClientHandler extends SimpleChannelInboundHandler<LeaderHeartbeat> 
 
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
-		final Channel channel = ctx.channel();
-		final String domain = client.getDomain();
-		ChannelContext.put(domain, channel);
+		client.setChannel(ctx.channel());
+		ClientsContext.add(client);
 		super.channelActive(ctx);
-	}
-
-	@Override
-	protected void channelRead0(ChannelHandlerContext ctx, LeaderHeartbeat msg) throws Exception {
-		LOGGER.debug(msg.toString());
 	}
 
 }

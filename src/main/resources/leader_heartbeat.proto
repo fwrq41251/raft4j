@@ -1,9 +1,0 @@
-option java_package = "com.winry.message";
-option java_outer_classname = "LeaderHeartbeatProto";
-
-message LeaderHeartbeat {
-
-  required float version = 1;
-  optional int32 sessionId = 2;
-
-}

@@ -1,6 +1,7 @@
 package com.winry.netty.client;
 
-import com.winry.message.LeaderHeartbeatProto;
+import com.winry.message.RaftMessage.VoteRequest;
+import com.winry.message.RaftMessage.VoteResponse;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
@@ -24,8 +25,8 @@ public class ClientInitializer extends ChannelInitializer<SocketChannel> {
 		ChannelPipeline pipeline = ch.pipeline();
 		// Decoders
 		pipeline.addLast("frameDecoder", new LengthFieldBasedFrameDecoder(1048576, 0, 4, 0, 4));
-		pipeline.addLast("protobufDecoder",
-				new ProtobufDecoder(LeaderHeartbeatProto.LeaderHeartbeat.getDefaultInstance()));
+		pipeline.addLast("protobufDecoder", new ProtobufDecoder(VoteRequest.getDefaultInstance()));
+		pipeline.addLast("protobufDecoder", new ProtobufDecoder(VoteResponse.getDefaultInstance()));
 
 		// Encoder
 		pipeline.addLast("frameEncoder", new LengthFieldPrepender(4));

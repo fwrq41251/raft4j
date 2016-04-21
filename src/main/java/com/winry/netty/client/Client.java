@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import io.netty.bootstrap.Bootstrap;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -16,6 +17,8 @@ public class Client {
 	private final String host;
 
 	private final int port;
+
+	private Channel channel;
 
 	public Client(String host, int port) {
 		super();
@@ -55,6 +58,14 @@ public class Client {
 
 	public String getDomain() {
 		return String.format("%s:%d", host, port);
+	}
+
+	public Channel getChannel() {
+		return channel;
+	}
+
+	public void setChannel(Channel channel) {
+		this.channel = channel;
 	}
 
 }

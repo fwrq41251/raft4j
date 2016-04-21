@@ -1,0 +1,29 @@
+option java_package = "com.winry.message";
+
+message VoteRequest {
+
+  required float version = 1;
+  required int32 termId = 2;
+  
+}
+
+message VoteResponse {
+
+  required float version = 1;
+  required int32 termId = 2;
+  
+}
+
+message AppendEntriesRequest {
+
+  required float version = 1;
+  required int32 termId = 2;
+  optional string log =3;
+}
+
+message AppendEntriesResponse {
+
+  required float version = 1;
+  required int32 termId = 2;
+
+}

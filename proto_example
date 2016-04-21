@@ -1,1 +1,1 @@
-protoc -I=E:/workspace/raft4j/src/main/resources --java_out=E:/workspace/raft4j/src/main/java E:/workspace/raft4j/src/main/resources/leader_heartbeat.proto
+protoc -I=E:/workspace/raft4j/src/main/resources --java_out=E:/workspace/raft4j/src/main/java E:/workspace/raft4j/src/main/resources/raft_message.proto

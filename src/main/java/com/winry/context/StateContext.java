@@ -2,9 +2,11 @@ package com.winry.context;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+import com.winry.message.MessageBuilder;
+import com.winry.message.RaftMessage.VoteRequest;
 import com.winry.task.WaitElectionTask;
 
-import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.EventLoopGroup;
 import io.netty.util.concurrent.Future;
 
 public class StateContext {
@@ -31,19 +33,25 @@ public class StateContext {
 		votes = votes + 1;
 	}
 
-	public static void startWaitElectionTask(ChannelHandlerContext ctx) {
+	public synchronized static void becomeFollower(int newTermId) {
+		termId.set(newTermId);
+		state = State.follower;
+	}
+
+	public static void startWaitElectionTask(EventLoopGroup eventLoopGroup) {
 		synchronized (waitElectionTask) {
-			waitElectionTask = ctx.channel().eventLoop().submit(new WaitElectionTask());
+			waitElectionTask = eventLoopGroup.submit(new WaitElectionTask());
 			waitElectionTask.addListener(futrue -> {
-				// TODO send votes request to nodes.
+				VoteRequest voteRequest = MessageBuilder.buildVoteRequest();
+				ClientsContext.sendToAll(voteRequest);
 			});
 		}
 	}
 
-	public static void restartWaitElectionTask(ChannelHandlerContext ctx) {
+	public static void restartWaitElectionTask(EventLoopGroup eventLoopGroup) {
 		synchronized (waitElectionTask) {
 			waitElectionTask.cancel(true);
-			startWaitElectionTask(ctx);
+			startWaitElectionTask(eventLoopGroup);
 		}
 	}
 
@@ -55,8 +63,8 @@ public class StateContext {
 		StateContext.state = state;
 	}
 
-	public static AtomicInteger getTermId() {
-		return termId;
+	public static int getTermId() {
+		return termId.get();
 	}
 
 	public static void increceTermId() {

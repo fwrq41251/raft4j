@@ -4,19 +4,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.winry.context.StateContext;
-import com.winry.message.LeaderHeartbeatProto.LeaderHeartbeat;
+import com.winry.message.RaftMessage.VoteRequest;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
-public class LeaderHeartbeatHandler extends SimpleChannelInboundHandler<LeaderHeartbeat> {
+public class VoteRequestHandler extends SimpleChannelInboundHandler<VoteRequest> {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(LeaderHeartbeatHandler.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(VoteRequestHandler.class);
 
 	@Override
-	protected void channelRead0(ChannelHandlerContext ctx, LeaderHeartbeat msg) throws Exception {
+	protected void channelRead0(ChannelHandlerContext ctx, VoteRequest msg) throws Exception {
 		LOGGER.debug("recive leader hearbeat");
-		StateContext.restartWaitElectionTask(ctx);
+		StateContext.restartWaitElectionTask(ctx.channel().eventLoop());
 	}
 
 	@Override
