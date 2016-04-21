@@ -1,7 +1,11 @@
 package com.winry;
 
+import java.io.IOException;
+import java.util.UUID;
+
 import org.junit.Test;
 
+import com.winry.util.LogUtil;
 import com.winry.util.TimeUtil;
 
 public class CommonTest {
@@ -16,5 +20,10 @@ public class CommonTest {
 	public void randomTimeout() {
 		final int timeout = TimeUtil.getElectionTimeout();
 		System.out.println(timeout);
+	}
+
+	@Test
+	public void appendLog() throws IOException {
+		LogUtil.append(UUID.randomUUID().toString());
 	}
 }

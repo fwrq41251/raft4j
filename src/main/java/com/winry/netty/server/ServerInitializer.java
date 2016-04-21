@@ -10,6 +10,8 @@ public class ServerInitializer extends ProtobugInitializer {
 	public void initChannel(SocketChannel ch) throws Exception {
 		ChannelPipeline pipeline = ch.pipeline();
 		pipeline.addLast("voteRequestHandler", new VoteRequestHandler());
+		pipeline.addLast("appendEntriesRequestHandler", new AppendEntriesRequestHandler());
+		pipeline.addLast("appendEntriesResponseHandler", new AppendEntriesResponseHandler());
 		super.initChannel(ch);
 	}
 }

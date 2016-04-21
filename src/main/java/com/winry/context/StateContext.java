@@ -1,8 +1,12 @@
 package com.winry.context;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import com.winry.message.MessageBuilder;
+import com.winry.message.RaftMessage.AppendEntriesRequest;
 import com.winry.message.RaftMessage.VoteRequest;
 import com.winry.task.WaitElectionTask;
 
@@ -19,8 +23,19 @@ public class StateContext {
 
 	private static Future<?> waitElectionTask = null;
 
-	enum State {
+	private final static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+
+	public enum State {
 		follower, candidate, leader;
+	}
+
+	public static void startLeaderHeartbeatTask() {
+		scheduler.scheduleAtFixedRate(() -> {
+			if (state == State.leader) {
+				AppendEntriesRequest heartbeat = MessageBuilder.buildLeaderHeartbeat();
+				ClientsContext.sendToAll(heartbeat);
+			}
+		}, 0, 150, TimeUnit.MICROSECONDS);
 	}
 
 	public static boolean isFollower() {

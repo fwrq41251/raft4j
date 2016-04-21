@@ -19,11 +19,13 @@ message AppendEntriesRequest {
   required float version = 1;
   required int32 termId = 2;
   optional string log =3;
+  
 }
 
 message AppendEntriesResponse {
 
   required float version = 1;
   required int32 termId = 2;
+  optional string log =3;
 
 }
