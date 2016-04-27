@@ -16,7 +16,7 @@ public class VoteRequestHandler extends SimpleChannelInboundHandler<VoteRequest>
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, VoteRequest msg) throws Exception {
 		LOGGER.debug("recive leader hearbeat");
-		StateContext.restartWaitElectionTask(ctx.channel().eventLoop());
+		StateContext.restartWaitElectionTask();
 	}
 
 	@Override

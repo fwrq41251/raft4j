@@ -23,7 +23,7 @@ public class AppendEntriesRequestHandler extends SimpleChannelInboundHandler<App
 	protected void channelRead0(ChannelHandlerContext ctx, AppendEntriesRequest msg) throws Exception {
 		checkLeader(msg);
 		appendLog(ctx, msg);
-		StateContext.restartWaitElectionTask(ctx.channel().eventLoop());
+		StateContext.restartWaitElectionTask();
 	}
 
 	private void appendLog(ChannelHandlerContext ctx, AppendEntriesRequest msg) {

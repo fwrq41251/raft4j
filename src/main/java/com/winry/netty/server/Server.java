@@ -3,8 +3,6 @@ package com.winry.netty.server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.winry.context.StateContext;
-
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelOption;
@@ -18,6 +16,8 @@ public class Server {
 
 	private final int port;
 
+	private EventLoopGroup workerGroup;
+
 	public Server(int port) {
 		super();
 		this.port = port;
@@ -26,7 +26,7 @@ public class Server {
 	public ChannelFuture start() {
 		// Configure the server.
 		EventLoopGroup bossGroup = new NioEventLoopGroup();
-		EventLoopGroup workerGroup = new NioEventLoopGroup();
+		workerGroup = new NioEventLoopGroup();
 		try {
 			ServerBootstrap b = new ServerBootstrap();
 			b.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class).childHandler(new ServerInitializer())
@@ -35,12 +35,15 @@ public class Server {
 
 			// Start the server.
 			ChannelFuture f = b.bind(port).sync();
-			f.addListener(futrue -> StateContext.startWaitElectionTask(workerGroup));
 			return f;
 		} catch (InterruptedException e) {
 			LOGGER.debug("client start interupted", e);
 			throw new RuntimeException(e);
 		}
+	}
+
+	public EventLoopGroup getWorkerGroup() {
+		return workerGroup;
 	}
 
 }

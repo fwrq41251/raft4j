@@ -14,6 +14,8 @@ public class ClientsContext {
 
 	private static List<Client> clients = new ArrayList<Client>();
 
+	private static Client leaderClient;
+
 	public static void add(Client client) {
 		synchronized (clients) {
 			clients.add(client);

@@ -18,7 +18,7 @@ message AppendEntriesRequest {
 
   required float version = 1;
   required int32 termId = 2;
-  optional string log =3;
+  optional string log = 3;
   
 }
 
@@ -26,6 +26,13 @@ message AppendEntriesResponse {
 
   required float version = 1;
   required int32 termId = 2;
-  optional string log =3;
+  required string log = 3;
 
+}
+
+message clientRequest {
+	
+	required string key = 1;
+	required string value = 2;
+	
 }

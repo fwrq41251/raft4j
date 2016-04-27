@@ -7,7 +7,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import com.winry.message.MessageBuilder;
 import com.winry.message.RaftMessage.AppendEntriesRequest;
-import com.winry.message.RaftMessage.VoteRequest;
 import com.winry.task.WaitElectionTask;
 
 import io.netty.channel.EventLoopGroup;
@@ -24,18 +23,22 @@ public class StateContext {
 	private static Future<?> waitElectionTask = null;
 
 	private final static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+	
+	private static EventLoopGroup workerGroup;
 
-	public enum State {
-		follower, candidate, leader;
-	}
-
-	public static void startLeaderHeartbeatTask() {
+	static {
+		// leader heartbeat
 		scheduler.scheduleAtFixedRate(() -> {
 			if (state == State.leader) {
 				AppendEntriesRequest heartbeat = MessageBuilder.buildLeaderHeartbeat();
 				ClientsContext.sendToAll(heartbeat);
 			}
 		}, 0, 150, TimeUnit.MICROSECONDS);
+		startWaitElectionTask();
+	}
+
+	public enum State {
+		follower, candidate, leader;
 	}
 
 	public static boolean isFollower() {
@@ -53,20 +56,14 @@ public class StateContext {
 		state = State.follower;
 	}
 
-	public static void startWaitElectionTask(EventLoopGroup eventLoopGroup) {
-		synchronized (waitElectionTask) {
-			waitElectionTask = eventLoopGroup.submit(new WaitElectionTask());
-			waitElectionTask.addListener(futrue -> {
-				VoteRequest voteRequest = MessageBuilder.buildVoteRequest();
-				ClientsContext.sendToAll(voteRequest);
-			});
-		}
+	private static void startWaitElectionTask() {
+		waitElectionTask = workerGroup.submit(new WaitElectionTask());
 	}
 
-	public static void restartWaitElectionTask(EventLoopGroup eventLoopGroup) {
+	public static void restartWaitElectionTask() {
 		synchronized (waitElectionTask) {
 			waitElectionTask.cancel(true);
-			startWaitElectionTask(eventLoopGroup);
+			startWaitElectionTask();
 		}
 	}
 
@@ -84,6 +81,10 @@ public class StateContext {
 
 	public static void increceTermId() {
 		termId.incrementAndGet();
+	}
+
+	public static void setWorkerGroup(EventLoopGroup workerGroup) {
+		StateContext.workerGroup = workerGroup;
 	}
 
 }

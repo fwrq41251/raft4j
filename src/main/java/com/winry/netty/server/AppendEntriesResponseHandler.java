@@ -10,6 +10,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
 
 public class AppendEntriesResponseHandler extends SimpleChannelInboundHandler<AppendEntriesResponse> {
 
+	@SuppressWarnings("unused")
 	private static final Logger LOGGER = LoggerFactory.getLogger(AppendEntriesResponseHandler.class);
 
 	@Override
