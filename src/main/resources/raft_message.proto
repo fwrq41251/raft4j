@@ -4,6 +4,7 @@ message VoteRequest {
 
   required float version = 1;
   required int32 termId = 2;
+  required int32 index = 3;
   
 }
 
@@ -11,6 +12,8 @@ message VoteResponse {
 
   required float version = 1;
   required int32 termId = 2;
+  required bool agree = 3;
+  required int32 index = 4;
   
 }
 
@@ -19,6 +22,7 @@ message AppendEntriesRequest {
   required float version = 1;
   required int32 termId = 2;
   optional string log = 3;
+  required int32 index = 4;
   
 }
 
@@ -27,6 +31,7 @@ message AppendEntriesResponse {
   required float version = 1;
   required int32 termId = 2;
   required string log = 3;
+  required int32 index = 4;
 
 }
 

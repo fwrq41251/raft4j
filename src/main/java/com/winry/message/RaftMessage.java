@@ -29,6 +29,15 @@ public final class RaftMessage {
      * <code>required int32 termId = 2;</code>
      */
     int getTermId();
+
+    /**
+     * <code>required int32 index = 3;</code>
+     */
+    boolean hasIndex();
+    /**
+     * <code>required int32 index = 3;</code>
+     */
+    int getIndex();
   }
   /**
    * Protobuf type {@code VoteRequest}
@@ -90,6 +99,11 @@ public final class RaftMessage {
             case 16: {
               bitField0_ |= 0x00000002;
               termId_ = input.readInt32();
+              break;
+            }
+            case 24: {
+              bitField0_ |= 0x00000004;
+              index_ = input.readInt32();
               break;
             }
           }
@@ -162,9 +176,25 @@ public final class RaftMessage {
       return termId_;
     }
 
+    public static final int INDEX_FIELD_NUMBER = 3;
+    private int index_;
+    /**
+     * <code>required int32 index = 3;</code>
+     */
+    public boolean hasIndex() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    /**
+     * <code>required int32 index = 3;</code>
+     */
+    public int getIndex() {
+      return index_;
+    }
+
     private void initFields() {
       version_ = 0F;
       termId_ = 0;
+      index_ = 0;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -180,6 +210,10 @@ public final class RaftMessage {
         memoizedIsInitialized = 0;
         return false;
       }
+      if (!hasIndex()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
       memoizedIsInitialized = 1;
       return true;
     }
@@ -192,6 +226,9 @@ public final class RaftMessage {
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         output.writeInt32(2, termId_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeInt32(3, index_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -209,6 +246,10 @@ public final class RaftMessage {
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(2, termId_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(3, index_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -331,6 +372,8 @@ public final class RaftMessage {
         bitField0_ = (bitField0_ & ~0x00000001);
         termId_ = 0;
         bitField0_ = (bitField0_ & ~0x00000002);
+        index_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000004);
         return this;
       }
 
@@ -367,6 +410,10 @@ public final class RaftMessage {
           to_bitField0_ |= 0x00000002;
         }
         result.termId_ = termId_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.index_ = index_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -389,6 +436,9 @@ public final class RaftMessage {
         if (other.hasTermId()) {
           setTermId(other.getTermId());
         }
+        if (other.hasIndex()) {
+          setIndex(other.getIndex());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -399,6 +449,10 @@ public final class RaftMessage {
           return false;
         }
         if (!hasTermId()) {
+          
+          return false;
+        }
+        if (!hasIndex()) {
           
           return false;
         }
@@ -488,6 +542,38 @@ public final class RaftMessage {
         return this;
       }
 
+      private int index_ ;
+      /**
+       * <code>required int32 index = 3;</code>
+       */
+      public boolean hasIndex() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>required int32 index = 3;</code>
+       */
+      public int getIndex() {
+        return index_;
+      }
+      /**
+       * <code>required int32 index = 3;</code>
+       */
+      public Builder setIndex(int value) {
+        bitField0_ |= 0x00000004;
+        index_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required int32 index = 3;</code>
+       */
+      public Builder clearIndex() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        index_ = 0;
+        onChanged();
+        return this;
+      }
+
       // @@protoc_insertion_point(builder_scope:VoteRequest)
     }
 
@@ -520,6 +606,24 @@ public final class RaftMessage {
      * <code>required int32 termId = 2;</code>
      */
     int getTermId();
+
+    /**
+     * <code>required bool agree = 3;</code>
+     */
+    boolean hasAgree();
+    /**
+     * <code>required bool agree = 3;</code>
+     */
+    boolean getAgree();
+
+    /**
+     * <code>required int32 index = 4;</code>
+     */
+    boolean hasIndex();
+    /**
+     * <code>required int32 index = 4;</code>
+     */
+    int getIndex();
   }
   /**
    * Protobuf type {@code VoteResponse}
@@ -581,6 +685,16 @@ public final class RaftMessage {
             case 16: {
               bitField0_ |= 0x00000002;
               termId_ = input.readInt32();
+              break;
+            }
+            case 24: {
+              bitField0_ |= 0x00000004;
+              agree_ = input.readBool();
+              break;
+            }
+            case 32: {
+              bitField0_ |= 0x00000008;
+              index_ = input.readInt32();
               break;
             }
           }
@@ -653,9 +767,41 @@ public final class RaftMessage {
       return termId_;
     }
 
+    public static final int AGREE_FIELD_NUMBER = 3;
+    private boolean agree_;
+    /**
+     * <code>required bool agree = 3;</code>
+     */
+    public boolean hasAgree() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    /**
+     * <code>required bool agree = 3;</code>
+     */
+    public boolean getAgree() {
+      return agree_;
+    }
+
+    public static final int INDEX_FIELD_NUMBER = 4;
+    private int index_;
+    /**
+     * <code>required int32 index = 4;</code>
+     */
+    public boolean hasIndex() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    /**
+     * <code>required int32 index = 4;</code>
+     */
+    public int getIndex() {
+      return index_;
+    }
+
     private void initFields() {
       version_ = 0F;
       termId_ = 0;
+      agree_ = false;
+      index_ = 0;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -671,6 +817,14 @@ public final class RaftMessage {
         memoizedIsInitialized = 0;
         return false;
       }
+      if (!hasAgree()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasIndex()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
       memoizedIsInitialized = 1;
       return true;
     }
@@ -683,6 +837,12 @@ public final class RaftMessage {
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         output.writeInt32(2, termId_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeBool(3, agree_);
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeInt32(4, index_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -700,6 +860,14 @@ public final class RaftMessage {
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(2, termId_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(3, agree_);
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(4, index_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -822,6 +990,10 @@ public final class RaftMessage {
         bitField0_ = (bitField0_ & ~0x00000001);
         termId_ = 0;
         bitField0_ = (bitField0_ & ~0x00000002);
+        agree_ = false;
+        bitField0_ = (bitField0_ & ~0x00000004);
+        index_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000008);
         return this;
       }
 
@@ -858,6 +1030,14 @@ public final class RaftMessage {
           to_bitField0_ |= 0x00000002;
         }
         result.termId_ = termId_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.agree_ = agree_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        result.index_ = index_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -880,6 +1060,12 @@ public final class RaftMessage {
         if (other.hasTermId()) {
           setTermId(other.getTermId());
         }
+        if (other.hasAgree()) {
+          setAgree(other.getAgree());
+        }
+        if (other.hasIndex()) {
+          setIndex(other.getIndex());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -890,6 +1076,14 @@ public final class RaftMessage {
           return false;
         }
         if (!hasTermId()) {
+          
+          return false;
+        }
+        if (!hasAgree()) {
+          
+          return false;
+        }
+        if (!hasIndex()) {
           
           return false;
         }
@@ -979,6 +1173,70 @@ public final class RaftMessage {
         return this;
       }
 
+      private boolean agree_ ;
+      /**
+       * <code>required bool agree = 3;</code>
+       */
+      public boolean hasAgree() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>required bool agree = 3;</code>
+       */
+      public boolean getAgree() {
+        return agree_;
+      }
+      /**
+       * <code>required bool agree = 3;</code>
+       */
+      public Builder setAgree(boolean value) {
+        bitField0_ |= 0x00000004;
+        agree_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required bool agree = 3;</code>
+       */
+      public Builder clearAgree() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        agree_ = false;
+        onChanged();
+        return this;
+      }
+
+      private int index_ ;
+      /**
+       * <code>required int32 index = 4;</code>
+       */
+      public boolean hasIndex() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      /**
+       * <code>required int32 index = 4;</code>
+       */
+      public int getIndex() {
+        return index_;
+      }
+      /**
+       * <code>required int32 index = 4;</code>
+       */
+      public Builder setIndex(int value) {
+        bitField0_ |= 0x00000008;
+        index_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required int32 index = 4;</code>
+       */
+      public Builder clearIndex() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        index_ = 0;
+        onChanged();
+        return this;
+      }
+
       // @@protoc_insertion_point(builder_scope:VoteResponse)
     }
 
@@ -1025,6 +1283,15 @@ public final class RaftMessage {
      */
     com.google.protobuf.ByteString
         getLogBytes();
+
+    /**
+     * <code>required int32 index = 4;</code>
+     */
+    boolean hasIndex();
+    /**
+     * <code>required int32 index = 4;</code>
+     */
+    int getIndex();
   }
   /**
    * Protobuf type {@code AppendEntriesRequest}
@@ -1092,6 +1359,11 @@ public final class RaftMessage {
               com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000004;
               log_ = bs;
+              break;
+            }
+            case 32: {
+              bitField0_ |= 0x00000008;
+              index_ = input.readInt32();
               break;
             }
           }
@@ -1206,10 +1478,26 @@ public final class RaftMessage {
       }
     }
 
+    public static final int INDEX_FIELD_NUMBER = 4;
+    private int index_;
+    /**
+     * <code>required int32 index = 4;</code>
+     */
+    public boolean hasIndex() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    /**
+     * <code>required int32 index = 4;</code>
+     */
+    public int getIndex() {
+      return index_;
+    }
+
     private void initFields() {
       version_ = 0F;
       termId_ = 0;
       log_ = "";
+      index_ = 0;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -1222,6 +1510,10 @@ public final class RaftMessage {
         return false;
       }
       if (!hasTermId()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasIndex()) {
         memoizedIsInitialized = 0;
         return false;
       }
@@ -1240,6 +1532,9 @@ public final class RaftMessage {
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         output.writeBytes(3, getLogBytes());
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeInt32(4, index_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -1261,6 +1556,10 @@ public final class RaftMessage {
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(3, getLogBytes());
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(4, index_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -1385,6 +1684,8 @@ public final class RaftMessage {
         bitField0_ = (bitField0_ & ~0x00000002);
         log_ = "";
         bitField0_ = (bitField0_ & ~0x00000004);
+        index_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000008);
         return this;
       }
 
@@ -1425,6 +1726,10 @@ public final class RaftMessage {
           to_bitField0_ |= 0x00000004;
         }
         result.log_ = log_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        result.index_ = index_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -1452,6 +1757,9 @@ public final class RaftMessage {
           log_ = other.log_;
           onChanged();
         }
+        if (other.hasIndex()) {
+          setIndex(other.getIndex());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -1462,6 +1770,10 @@ public final class RaftMessage {
           return false;
         }
         if (!hasTermId()) {
+          
+          return false;
+        }
+        if (!hasIndex()) {
           
           return false;
         }
@@ -1627,6 +1939,38 @@ public final class RaftMessage {
         return this;
       }
 
+      private int index_ ;
+      /**
+       * <code>required int32 index = 4;</code>
+       */
+      public boolean hasIndex() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      /**
+       * <code>required int32 index = 4;</code>
+       */
+      public int getIndex() {
+        return index_;
+      }
+      /**
+       * <code>required int32 index = 4;</code>
+       */
+      public Builder setIndex(int value) {
+        bitField0_ |= 0x00000008;
+        index_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required int32 index = 4;</code>
+       */
+      public Builder clearIndex() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        index_ = 0;
+        onChanged();
+        return this;
+      }
+
       // @@protoc_insertion_point(builder_scope:AppendEntriesRequest)
     }
 
@@ -1661,18 +2005,27 @@ public final class RaftMessage {
     int getTermId();
 
     /**
-     * <code>optional string log = 3;</code>
+     * <code>required string log = 3;</code>
      */
     boolean hasLog();
     /**
-     * <code>optional string log = 3;</code>
+     * <code>required string log = 3;</code>
      */
     java.lang.String getLog();
     /**
-     * <code>optional string log = 3;</code>
+     * <code>required string log = 3;</code>
      */
     com.google.protobuf.ByteString
         getLogBytes();
+
+    /**
+     * <code>required int32 index = 4;</code>
+     */
+    boolean hasIndex();
+    /**
+     * <code>required int32 index = 4;</code>
+     */
+    int getIndex();
   }
   /**
    * Protobuf type {@code AppendEntriesResponse}
@@ -1740,6 +2093,11 @@ public final class RaftMessage {
               com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000004;
               log_ = bs;
+              break;
+            }
+            case 32: {
+              bitField0_ |= 0x00000008;
+              index_ = input.readInt32();
               break;
             }
           }
@@ -1815,13 +2173,13 @@ public final class RaftMessage {
     public static final int LOG_FIELD_NUMBER = 3;
     private java.lang.Object log_;
     /**
-     * <code>optional string log = 3;</code>
+     * <code>required string log = 3;</code>
      */
     public boolean hasLog() {
       return ((bitField0_ & 0x00000004) == 0x00000004);
     }
     /**
-     * <code>optional string log = 3;</code>
+     * <code>required string log = 3;</code>
      */
     public java.lang.String getLog() {
       java.lang.Object ref = log_;
@@ -1838,7 +2196,7 @@ public final class RaftMessage {
       }
     }
     /**
-     * <code>optional string log = 3;</code>
+     * <code>required string log = 3;</code>
      */
     public com.google.protobuf.ByteString
         getLogBytes() {
@@ -1854,10 +2212,26 @@ public final class RaftMessage {
       }
     }
 
+    public static final int INDEX_FIELD_NUMBER = 4;
+    private int index_;
+    /**
+     * <code>required int32 index = 4;</code>
+     */
+    public boolean hasIndex() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    /**
+     * <code>required int32 index = 4;</code>
+     */
+    public int getIndex() {
+      return index_;
+    }
+
     private void initFields() {
       version_ = 0F;
       termId_ = 0;
       log_ = "";
+      index_ = 0;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -1870,6 +2244,14 @@ public final class RaftMessage {
         return false;
       }
       if (!hasTermId()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasLog()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasIndex()) {
         memoizedIsInitialized = 0;
         return false;
       }
@@ -1888,6 +2270,9 @@ public final class RaftMessage {
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         output.writeBytes(3, getLogBytes());
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeInt32(4, index_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -1909,6 +2294,10 @@ public final class RaftMessage {
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(3, getLogBytes());
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(4, index_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -2033,6 +2422,8 @@ public final class RaftMessage {
         bitField0_ = (bitField0_ & ~0x00000002);
         log_ = "";
         bitField0_ = (bitField0_ & ~0x00000004);
+        index_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000008);
         return this;
       }
 
@@ -2073,6 +2464,10 @@ public final class RaftMessage {
           to_bitField0_ |= 0x00000004;
         }
         result.log_ = log_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        result.index_ = index_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -2100,6 +2495,9 @@ public final class RaftMessage {
           log_ = other.log_;
           onChanged();
         }
+        if (other.hasIndex()) {
+          setIndex(other.getIndex());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -2110,6 +2508,14 @@ public final class RaftMessage {
           return false;
         }
         if (!hasTermId()) {
+          
+          return false;
+        }
+        if (!hasLog()) {
+          
+          return false;
+        }
+        if (!hasIndex()) {
           
           return false;
         }
@@ -2201,13 +2607,13 @@ public final class RaftMessage {
 
       private java.lang.Object log_ = "";
       /**
-       * <code>optional string log = 3;</code>
+       * <code>required string log = 3;</code>
        */
       public boolean hasLog() {
         return ((bitField0_ & 0x00000004) == 0x00000004);
       }
       /**
-       * <code>optional string log = 3;</code>
+       * <code>required string log = 3;</code>
        */
       public java.lang.String getLog() {
         java.lang.Object ref = log_;
@@ -2224,7 +2630,7 @@ public final class RaftMessage {
         }
       }
       /**
-       * <code>optional string log = 3;</code>
+       * <code>required string log = 3;</code>
        */
       public com.google.protobuf.ByteString
           getLogBytes() {
@@ -2240,7 +2646,7 @@ public final class RaftMessage {
         }
       }
       /**
-       * <code>optional string log = 3;</code>
+       * <code>required string log = 3;</code>
        */
       public Builder setLog(
           java.lang.String value) {
@@ -2253,7 +2659,7 @@ public final class RaftMessage {
         return this;
       }
       /**
-       * <code>optional string log = 3;</code>
+       * <code>required string log = 3;</code>
        */
       public Builder clearLog() {
         bitField0_ = (bitField0_ & ~0x00000004);
@@ -2262,7 +2668,7 @@ public final class RaftMessage {
         return this;
       }
       /**
-       * <code>optional string log = 3;</code>
+       * <code>required string log = 3;</code>
        */
       public Builder setLogBytes(
           com.google.protobuf.ByteString value) {
@@ -2271,6 +2677,38 @@ public final class RaftMessage {
   }
   bitField0_ |= 0x00000004;
         log_ = value;
+        onChanged();
+        return this;
+      }
+
+      private int index_ ;
+      /**
+       * <code>required int32 index = 4;</code>
+       */
+      public boolean hasIndex() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      /**
+       * <code>required int32 index = 4;</code>
+       */
+      public int getIndex() {
+        return index_;
+      }
+      /**
+       * <code>required int32 index = 4;</code>
+       */
+      public Builder setIndex(int value) {
+        bitField0_ |= 0x00000008;
+        index_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required int32 index = 4;</code>
+       */
+      public Builder clearIndex() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        index_ = 0;
         onChanged();
         return this;
       }
@@ -2284,6 +2722,655 @@ public final class RaftMessage {
     }
 
     // @@protoc_insertion_point(class_scope:AppendEntriesResponse)
+  }
+
+  public interface clientRequestOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:clientRequest)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>required string key = 1;</code>
+     */
+    boolean hasKey();
+    /**
+     * <code>required string key = 1;</code>
+     */
+    java.lang.String getKey();
+    /**
+     * <code>required string key = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getKeyBytes();
+
+    /**
+     * <code>required string value = 2;</code>
+     */
+    boolean hasValue();
+    /**
+     * <code>required string value = 2;</code>
+     */
+    java.lang.String getValue();
+    /**
+     * <code>required string value = 2;</code>
+     */
+    com.google.protobuf.ByteString
+        getValueBytes();
+  }
+  /**
+   * Protobuf type {@code clientRequest}
+   */
+  public static final class clientRequest extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:clientRequest)
+      clientRequestOrBuilder {
+    // Use clientRequest.newBuilder() to construct.
+    private clientRequest(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+      this.unknownFields = builder.getUnknownFields();
+    }
+    private clientRequest(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final clientRequest defaultInstance;
+    public static clientRequest getDefaultInstance() {
+      return defaultInstance;
+    }
+
+    public clientRequest getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private clientRequest(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000001;
+              key_ = bs;
+              break;
+            }
+            case 18: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000002;
+              value_ = bs;
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.winry.message.RaftMessage.internal_static_clientRequest_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.winry.message.RaftMessage.internal_static_clientRequest_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.winry.message.RaftMessage.clientRequest.class, com.winry.message.RaftMessage.clientRequest.Builder.class);
+    }
+
+    public static com.google.protobuf.Parser<clientRequest> PARSER =
+        new com.google.protobuf.AbstractParser<clientRequest>() {
+      public clientRequest parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new clientRequest(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<clientRequest> getParserForType() {
+      return PARSER;
+    }
+
+    private int bitField0_;
+    public static final int KEY_FIELD_NUMBER = 1;
+    private java.lang.Object key_;
+    /**
+     * <code>required string key = 1;</code>
+     */
+    public boolean hasKey() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    /**
+     * <code>required string key = 1;</code>
+     */
+    public java.lang.String getKey() {
+      java.lang.Object ref = key_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          key_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>required string key = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getKeyBytes() {
+      java.lang.Object ref = key_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        key_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int VALUE_FIELD_NUMBER = 2;
+    private java.lang.Object value_;
+    /**
+     * <code>required string value = 2;</code>
+     */
+    public boolean hasValue() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    /**
+     * <code>required string value = 2;</code>
+     */
+    public java.lang.String getValue() {
+      java.lang.Object ref = value_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          value_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>required string value = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getValueBytes() {
+      java.lang.Object ref = value_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        value_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private void initFields() {
+      key_ = "";
+      value_ = "";
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      if (!hasKey()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasValue()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBytes(1, getKeyBytes());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeBytes(2, getValueBytes());
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(1, getKeyBytes());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(2, getValueBytes());
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+
+    public static com.winry.message.RaftMessage.clientRequest parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.winry.message.RaftMessage.clientRequest parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.winry.message.RaftMessage.clientRequest parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.winry.message.RaftMessage.clientRequest parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.winry.message.RaftMessage.clientRequest parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static com.winry.message.RaftMessage.clientRequest parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static com.winry.message.RaftMessage.clientRequest parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static com.winry.message.RaftMessage.clientRequest parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static com.winry.message.RaftMessage.clientRequest parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static com.winry.message.RaftMessage.clientRequest parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(com.winry.message.RaftMessage.clientRequest prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code clientRequest}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:clientRequest)
+        com.winry.message.RaftMessage.clientRequestOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.winry.message.RaftMessage.internal_static_clientRequest_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.winry.message.RaftMessage.internal_static_clientRequest_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.winry.message.RaftMessage.clientRequest.class, com.winry.message.RaftMessage.clientRequest.Builder.class);
+      }
+
+      // Construct using com.winry.message.RaftMessage.clientRequest.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+
+      public Builder clear() {
+        super.clear();
+        key_ = "";
+        bitField0_ = (bitField0_ & ~0x00000001);
+        value_ = "";
+        bitField0_ = (bitField0_ & ~0x00000002);
+        return this;
+      }
+
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.winry.message.RaftMessage.internal_static_clientRequest_descriptor;
+      }
+
+      public com.winry.message.RaftMessage.clientRequest getDefaultInstanceForType() {
+        return com.winry.message.RaftMessage.clientRequest.getDefaultInstance();
+      }
+
+      public com.winry.message.RaftMessage.clientRequest build() {
+        com.winry.message.RaftMessage.clientRequest result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public com.winry.message.RaftMessage.clientRequest buildPartial() {
+        com.winry.message.RaftMessage.clientRequest result = new com.winry.message.RaftMessage.clientRequest(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.key_ = key_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.value_ = value_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.winry.message.RaftMessage.clientRequest) {
+          return mergeFrom((com.winry.message.RaftMessage.clientRequest)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.winry.message.RaftMessage.clientRequest other) {
+        if (other == com.winry.message.RaftMessage.clientRequest.getDefaultInstance()) return this;
+        if (other.hasKey()) {
+          bitField0_ |= 0x00000001;
+          key_ = other.key_;
+          onChanged();
+        }
+        if (other.hasValue()) {
+          bitField0_ |= 0x00000002;
+          value_ = other.value_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        if (!hasKey()) {
+          
+          return false;
+        }
+        if (!hasValue()) {
+          
+          return false;
+        }
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.winry.message.RaftMessage.clientRequest parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.winry.message.RaftMessage.clientRequest) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private java.lang.Object key_ = "";
+      /**
+       * <code>required string key = 1;</code>
+       */
+      public boolean hasKey() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      /**
+       * <code>required string key = 1;</code>
+       */
+      public java.lang.String getKey() {
+        java.lang.Object ref = key_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            key_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>required string key = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getKeyBytes() {
+        java.lang.Object ref = key_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          key_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string key = 1;</code>
+       */
+      public Builder setKey(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        key_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string key = 1;</code>
+       */
+      public Builder clearKey() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        key_ = getDefaultInstance().getKey();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string key = 1;</code>
+       */
+      public Builder setKeyBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        key_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object value_ = "";
+      /**
+       * <code>required string value = 2;</code>
+       */
+      public boolean hasValue() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      /**
+       * <code>required string value = 2;</code>
+       */
+      public java.lang.String getValue() {
+        java.lang.Object ref = value_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            value_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>required string value = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getValueBytes() {
+        java.lang.Object ref = value_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          value_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string value = 2;</code>
+       */
+      public Builder setValue(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+        value_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string value = 2;</code>
+       */
+      public Builder clearValue() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        value_ = getDefaultInstance().getValue();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string value = 2;</code>
+       */
+      public Builder setValueBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+        value_ = value;
+        onChanged();
+        return this;
+      }
+
+      // @@protoc_insertion_point(builder_scope:clientRequest)
+    }
+
+    static {
+      defaultInstance = new clientRequest(true);
+      defaultInstance.initFields();
+    }
+
+    // @@protoc_insertion_point(class_scope:clientRequest)
   }
 
   private static final com.google.protobuf.Descriptors.Descriptor
@@ -2306,6 +3393,11 @@ public final class RaftMessage {
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_AppendEntriesResponse_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_clientRequest_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_clientRequest_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -2315,13 +3407,16 @@ public final class RaftMessage {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\022raft_message.proto\".\n\013VoteRequest\022\017\n\007v" +
-      "ersion\030\001 \002(\002\022\016\n\006termId\030\002 \002(\005\"/\n\014VoteResp" +
-      "onse\022\017\n\007version\030\001 \002(\002\022\016\n\006termId\030\002 \002(\005\"D\n" +
-      "\024AppendEntriesRequest\022\017\n\007version\030\001 \002(\002\022\016" +
-      "\n\006termId\030\002 \002(\005\022\013\n\003log\030\003 \001(\t\"E\n\025AppendEnt" +
-      "riesResponse\022\017\n\007version\030\001 \002(\002\022\016\n\006termId\030" +
-      "\002 \002(\005\022\013\n\003log\030\003 \001(\tB\023\n\021com.winry.message"
+      "\n\022raft_message.proto\"=\n\013VoteRequest\022\017\n\007v" +
+      "ersion\030\001 \002(\002\022\016\n\006termId\030\002 \002(\005\022\r\n\005index\030\003 " +
+      "\002(\005\"M\n\014VoteResponse\022\017\n\007version\030\001 \002(\002\022\016\n\006" +
+      "termId\030\002 \002(\005\022\r\n\005agree\030\003 \002(\010\022\r\n\005index\030\004 \002" +
+      "(\005\"S\n\024AppendEntriesRequest\022\017\n\007version\030\001 " +
+      "\002(\002\022\016\n\006termId\030\002 \002(\005\022\013\n\003log\030\003 \001(\t\022\r\n\005inde" +
+      "x\030\004 \002(\005\"T\n\025AppendEntriesResponse\022\017\n\007vers" +
+      "ion\030\001 \002(\002\022\016\n\006termId\030\002 \002(\005\022\013\n\003log\030\003 \002(\t\022\r" +
+      "\n\005index\030\004 \002(\005\"+\n\rclientRequest\022\013\n\003key\030\001 " +
+      "\002(\t\022\r\n\005value\030\002 \002(\tB\023\n\021com.winry.message"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -2340,25 +3435,31 @@ public final class RaftMessage {
     internal_static_VoteRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_VoteRequest_descriptor,
-        new java.lang.String[] { "Version", "TermId", });
+        new java.lang.String[] { "Version", "TermId", "Index", });
     internal_static_VoteResponse_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_VoteResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_VoteResponse_descriptor,
-        new java.lang.String[] { "Version", "TermId", });
+        new java.lang.String[] { "Version", "TermId", "Agree", "Index", });
     internal_static_AppendEntriesRequest_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_AppendEntriesRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_AppendEntriesRequest_descriptor,
-        new java.lang.String[] { "Version", "TermId", "Log", });
+        new java.lang.String[] { "Version", "TermId", "Log", "Index", });
     internal_static_AppendEntriesResponse_descriptor =
       getDescriptor().getMessageTypes().get(3);
     internal_static_AppendEntriesResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_AppendEntriesResponse_descriptor,
-        new java.lang.String[] { "Version", "TermId", "Log", });
+        new java.lang.String[] { "Version", "TermId", "Log", "Index", });
+    internal_static_clientRequest_descriptor =
+      getDescriptor().getMessageTypes().get(4);
+    internal_static_clientRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_clientRequest_descriptor,
+        new java.lang.String[] { "Key", "Value", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

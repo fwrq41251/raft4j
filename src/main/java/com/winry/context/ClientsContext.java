@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.google.common.base.Splitter;
+import com.winry.message.Message;
+import com.winry.message.MessageSender;
 import com.winry.netty.client.Client;
 import com.winry.util.ConfigUtil;
-
-import io.netty.channel.Channel;
 
 public class ClientsContext {
 
@@ -32,10 +32,11 @@ public class ClientsContext {
 	}
 
 	public static void sendToAll(Object message) {
-		clients.forEach(client -> {
-			Channel channel = client.getChannel();
-			channel.writeAndFlush(message);
-		});
+		clients.forEach(client -> MessageSender.put(new Message(message, client.getChannel())));
+	}
+
+	public static int size() {
+		return clients.size();
 	}
 
 	private static Map<String, String> readNodesConfig() {

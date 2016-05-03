@@ -6,7 +6,7 @@ import com.winry.message.MessageBuilder;
 import com.winry.message.RaftMessage.VoteRequest;
 import com.winry.util.TimeUtil;
 
-public class WaitElectionTask implements Runnable {
+public class ElectionTask implements Runnable {
 
 	public boolean result = false;
 
@@ -19,9 +19,11 @@ public class WaitElectionTask implements Runnable {
 			} catch (InterruptedException ex) {
 				Thread.currentThread().interrupt();
 			}
-			StateContext.becomeCandidate();
-			VoteRequest voteRequest = MessageBuilder.buildVoteRequest();
-			ClientsContext.sendToAll(voteRequest);
+			if (StateContext.isFollower()) {
+				StateContext.becomeCandidate();
+				VoteRequest voteRequest = MessageBuilder.buildVoteRequest();
+				ClientsContext.sendToAll(voteRequest);
+			}
 		}
 	}
 

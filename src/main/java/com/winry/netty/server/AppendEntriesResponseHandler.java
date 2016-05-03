@@ -3,6 +3,7 @@ package com.winry.netty.server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.winry.message.MessageSender;
 import com.winry.message.RaftMessage.AppendEntriesResponse;
 
 import io.netty.channel.ChannelHandlerContext;
@@ -15,6 +16,7 @@ public class AppendEntriesResponseHandler extends SimpleChannelInboundHandler<Ap
 
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, AppendEntriesResponse msg) throws Exception {
+		MessageSender.remove(msg.getIndex());
 		String log = msg.getLog();
 		// TODO append log
 	}

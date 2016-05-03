@@ -23,7 +23,6 @@ public class AppendEntriesRequestHandler extends SimpleChannelInboundHandler<App
 	protected void channelRead0(ChannelHandlerContext ctx, AppendEntriesRequest msg) throws Exception {
 		checkLeader(msg);
 		appendLog(ctx, msg);
-		StateContext.restartWaitElectionTask();
 	}
 
 	private void appendLog(ChannelHandlerContext ctx, AppendEntriesRequest msg) {
@@ -43,6 +42,7 @@ public class AppendEntriesRequestHandler extends SimpleChannelInboundHandler<App
 		int termId = msg.getTermId();
 		if (termId >= StateContext.getTermId()) {
 			StateContext.becomeFollower(termId);
+			StateContext.restartWaitElectionTask();
 		}
 	}
 

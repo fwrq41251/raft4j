@@ -13,4 +13,5 @@ public class ProtobuffTest {
 		String log = request.getLog();
 		System.out.println(log);
 	}
+
 }

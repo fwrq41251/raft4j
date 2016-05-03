@@ -41,7 +41,7 @@ public class MessageSender {
 		executer.submit(() -> {
 			while (true) {
 				Message message = toSend.take();
-				Channel channel = message.getClient().getChannel();
+				Channel channel = message.getChannel();
 				executer.submit(() -> channel.writeAndFlush(message));
 				sended.put(message.getIndex(), message);
 			}

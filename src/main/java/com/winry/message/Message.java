@@ -1,6 +1,8 @@
 package com.winry.message;
 
-import com.winry.netty.client.Client;
+import com.winry.context.LogContext;
+
+import io.netty.channel.Channel;
 
 public class Message {
 
@@ -8,7 +10,18 @@ public class Message {
 
 	private Object message;
 
-	private Client client;
+	private Channel channel;
+
+	public Message(Object message, Channel channel) {
+		this(LogContext.getIndex().get(), message, channel);
+	}
+
+	public Message(long index, Object message, Channel channel) {
+		super();
+		this.index = index;
+		this.message = message;
+		this.channel = channel;
+	}
 
 	public long getIndex() {
 		return index;
@@ -26,12 +39,12 @@ public class Message {
 		this.message = message;
 	}
 
-	public Client getClient() {
-		return client;
+	public Channel getChannel() {
+		return channel;
 	}
 
-	public void setClient(Client client) {
-		this.client = client;
+	public void setChannel(Channel channel) {
+		this.channel = channel;
 	}
 
 }
