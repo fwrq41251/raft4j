@@ -16,8 +16,6 @@ public class Server {
 
 	private final int port;
 
-	private EventLoopGroup workerGroup;
-
 	public Server(int port) {
 		super();
 		this.port = port;
@@ -26,7 +24,7 @@ public class Server {
 	public ChannelFuture start() {
 		// Configure the server.
 		EventLoopGroup bossGroup = new NioEventLoopGroup();
-		workerGroup = new NioEventLoopGroup();
+		EventLoopGroup workerGroup = new NioEventLoopGroup();
 		try {
 			ServerBootstrap b = new ServerBootstrap();
 			b.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class).childHandler(new ServerInitializer())
@@ -40,10 +38,6 @@ public class Server {
 			LOGGER.debug("client start interupted", e);
 			throw new RuntimeException(e);
 		}
-	}
-
-	public EventLoopGroup getWorkerGroup() {
-		return workerGroup;
 	}
 
 }

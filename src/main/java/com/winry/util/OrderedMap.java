@@ -24,6 +24,10 @@ public class OrderedMap<K, V> {
 		return result;
 	}
 
+	public V get(K key) {
+		return map.get(key);
+	}
+
 	public List<V> getList() {
 		return list;
 	}
