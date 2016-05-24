@@ -26,6 +26,10 @@ public class MessageSender {
 	private final static ExecutorService executer = Executors.newFixedThreadPool(10);
 
 	static {
+		startSendTask();
+	}
+
+	private static void startSendTask() {
 		executer.submit(() -> {
 			while (true) {
 				Message message = toSend.take();
